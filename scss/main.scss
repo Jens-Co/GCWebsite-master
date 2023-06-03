@@ -1,0 +1,99 @@
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "colors.scss";
+@import url("https://fonts.googleapis.com/css2?family=Mulish&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+
+:root {
+  --bs-body-font-family: 'Mulish', sans-serif;
+  /* Color Variables */
+  --blue: #6279b8;
+  --black: #272932;
+  --smoke-black: #14181d;
+  --dark-black: #121212;
+  --red: #601700;
+}
+
+::selection {
+  background: var(--blue);
+}
+
+body {
+  background-image: url("../images/Background.jpg");
+  color: #fff;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  background-size: 25%;
+  background-color: #0d1116;
+}
+
+header {
+  @extend .d-flex;
+  @extend .flex-wrap;
+  @extend .align-items-center;
+  @extend .justify-content-center;
+  @extend .justify-content-md-between;
+  @extend .py-3;
+  @extend .px-5;
+  @extend .mb-4;
+  @extend .border-bottom;
+  @extend .text-white;
+
+  background-color: rgba(39, 41, 50, .85);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+footer {
+  background-color: var(--black);
+}
+
+code {
+  padding: 0.2em;
+  margin: -2.2em, 0;
+  border-radius: 4px;
+  text-indent: 0;
+  background-color: var(--black);
+  color: white;
+}
+
+div.section {
+  @extend .container;
+  @extend .text-center;
+  @extend .border;
+  @extend .rounded-3;
+  @extend .p-3;
+  @extend .shadow;
+
+  background-color: var(--smoke-black);
+}
+
+div.section-left {
+  @extend .container;
+  @extend .border;
+  @extend .rounded-3;
+  @extend .p-3;
+  @extend .shadow;
+  text-align: left;
+  background-color: var(--smoke-black);
+}
+
+div.sections {
+  @extend .d-grid;
+  @extend .gap-3;
+}
+
+div.buttons {
+  @extend .d-grid;
+  @extend .gap-2;
+  @extend .d-sm-flex;
+  @extend .justify-content-sm-center;
+}
+
+a.button {
+  @extend .btn;
+  @extend .btn-primary;
+}
+
+span.primary-dns::before {
+  content: "44.193.156.219";
+}

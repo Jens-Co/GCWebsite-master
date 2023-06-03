@@ -1,0 +1,145 @@
+<div class="section-left">
+  <form id="parts" onsubmit="update()" oninput="update()">
+    <div class="input-group mb-2">
+      <label class="input-group-text" for="back">Backend Address</label>
+      <input aria-label="Backend Address" class="form-control" type="text" id="back" name="back"
+        placeholder="test.geysermc.org" value="test.geysermc.org" required>
+      <input aria-label="Backend port" class="form-control" type="number" id="bport" name="bport" placeholder="25565"
+        min="0" max="65535">
+    </div>
+    <div class="input-group mb-2">
+      <label class="input-group-text" for="bver">Backend Version</label>
+      <select class="form-select" id="bver" name="bver">
+        <option value="" selected>Select...</option>
+        <option>AUTO</option>
+        <optgroup label="1.19">
+          <option value="1.19.2">1.19.1/2</option>
+          <option>1.19</option>
+        </optgroup>
+        <optgroup label="1.18">
+          <option>1.18.2</option>
+          <option value="1.18">1.18(.1)</option>
+        </optgroup>
+        <optgroup label="1.17">
+          <option>1.17.1</option>
+          <option>1.17</option>
+        </optgroup>
+        <optgroup label="1.16">
+          <option value="1.16.5">1.16.4/5</option>
+          <option>1.16.3</option>
+          <option>1.16.2</option>
+          <option>1.16.1</option>
+          <option>1.16</option>
+        </optgroup>
+        <optgroup label="1.15">
+          <option>1.15.2</option>
+          <option>1.15.1</option>
+          <option>1.15</option>
+        </optgroup>
+        <optgroup label="1.14">
+          <option>1.14.4</option>
+          <option>1.14.3</option>
+          <option>1.14.2</option>
+          <option>1.14.1</option>
+          <option>1.14</option>
+        </optgroup>
+        <optgroup label="1.13">
+          <option>1.13.2</option>
+          <option>1.13.1</option>
+          <option>1.13</option>
+        </optgroup>
+        <optgroup label="1.12">
+          <option>1.12.2</option>
+          <option>1.12.1</option>
+          <option>1.12</option>
+        </optgroup>
+        <optgroup label="1.11">
+          <option value="1.11.2">1.11.1/2</option>
+          <option>1.11</option>
+        </optgroup>
+        <optgroup label="1.10">
+          <option value="1.10">1.10.x</option>
+        </optgroup>
+        <optgroup label="1.9">
+          <option value="1.9.4">1.9.3/4</option>
+          <option>1.9.2</option>
+          <option>1.9.1</option>
+          <option>1.9</option>
+        </optgroup>
+        <optgroup label="1.8">
+          <option>1.8.x</option>
+        </optgroup>
+        <optgroup label="1.7">
+          <option value="1.7.10">1.7.6-10</option>
+          <option value="1.7.5">1.7.2-5</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="input-group mb-3">
+      <label class="input-group-text" for="bname">Backend Username</label>
+      <input class="form-control" type="text" id="bname" name="bname" placeholder="Dinnerbone" maxlength="16">
+    </div>
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="checkbox" id="ot" name="ot" oninput="uncheck('of')">
+      <label class="form-check-label" for="ot">Force online mode in frontend</label>
+    </div>
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" id="of" name="of" oninput="uncheck('ot')">
+      <label class="form-check-label" for="of">Force offline mode in frontend (recommended for Geyser)</label>
+    </div>
+    <div class="input-group mb-3">
+      <label class="input-group-text" for="suffix">VIAaaS Address</label>
+      <input aria-label="VIAaaS adddress" class="form-control" type="text" id="suffix" name="suffix"
+        placeholder="via.geyserconnect.net" value="via.geyserconnect.net" disabled>
+      <input aria-label="VIAaaS port" class="form-control" type="number" id="iport" name="iport" placeholder="25565"
+        min="0" max="65535" disabled>
+    </div>
+  </form>
+  <div>
+    <div class="input-group mb-3" onclick="copyAddress()" data-bs-toggle="tooltip" data-bs-placement="top"
+      data-bs-title="Click to copy">
+      <label class="input-group-text" for="generated">Generated Address</label>
+      <input readonly class="form-control" type="text" id="generated">
+    </div>
+  </div>
+  <script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+    document.getElementById("parts").addEventListener("submit", event => event.preventDefault());
+    update();
+
+    function update() {
+      let address = val("back");
+      // Handle IPv6 with sslip.io
+      if (address.includes(":") || address.includes("[")) address = address.replaceAll(":", "-")
+        .replaceAll("[", "").replaceAll("]", "") + ".sslip.io";
+      if (val("bport") !== "") address += "._p" + val("bport");
+      if (val("bver") !== "") address += "._v" + val("bver").replaceAll(".", "_");
+      if (val("bname") !== "") address += "._u" + val("bname");
+      if (isChecked("ot")) address += "._ot";
+      if (isChecked("of")) address += "._of";
+      address += "." + val("suffix");
+      if (val("iport") !== "") address += ":" + val("iport");
+
+      document.getElementById('generated').value = address;
+    }
+
+    function copyAddress() {
+      let txt = document.getElementById("generated");
+      navigator.clipboard.writeText(txt.value);
+    }
+
+    function val(id) {
+      return document.getElementById(id).value;
+    }
+
+    function uncheck(id) {
+      document.getElementById(id).checked = false;
+    }
+
+    function isChecked(id) {
+      return document.getElementById(id).checked;
+    }
+  </script>
+</div>

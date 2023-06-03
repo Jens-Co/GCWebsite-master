@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark">
+
+<head>
+  <title>{{title}}</title>
+  <link rel='stylesheet' href='/stylesheets/main.css'>
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/favicon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/favicon/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/favicon/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/favicon/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/images/favicon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/images/favicon/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/images/favicon/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/images/favicon/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/images/favicon/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/images/favicon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicon/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicon/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/images/favicon/favicon-128.png" sizes="128x128">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6279b8">
+
+  <script src='https://cdn.jsdelivr.net/npm/@widgetbot/crate@3' async defer>
+    new Crate({
+      server: '795431299690135562', // Public GeyserConnect (Not associated with GeyserMC)
+      channel: '830344712191868940' // <#830344712191868940>
+    })
+  </script>
+</head>
+
+<header>
+  <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-decoration-none">
+    <img src="/images/Logo.png" width="40" role="img" class="bi me-2">
+    <span class="fs-4">Public GeyserConnect</span>
+  </a>
+
+  <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <li><a href="/" class="nav-link px-2 link-light"><i class="bi bi-house-fill"></i> Home</a></li>
+    <li><a href="https://discord.com/invite/3r7T9fXzDE" class="nav-link px-2 link-light"><i class="bi bi-discord"></i>
+        Discord</a></li>
+    <li><a href="https://www.patreon.com/geyserconnect" class="nav-link px-2 link-light"><i
+          class="bi bi-piggy-bank-fill"></i> Patreon</a></li>
+
+  </ul>
+  {{#if isAuthenticated }}
+  <div class="col-md-3 dropdown text-end">
+    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+      aria-expanded="false">
+      <img src="https://cdn.pastemagazine.com/www/blogs/lists/2010/05/13/bender.jpg" alt="mdo" width="32" height="32"
+        class="rounded-circle">
+    </a>
+    <ul class="dropdown-menu  dropdown-menu-md-end text-small">
+      <li><a class="dropdown-item" href="/account/profile">Account</a></li>
+      <li>
+        <hr class="dropdown-divider">
+      </li>
+      <li><a class="dropdown-item" href="/auth/signout">Sign out</a></li>
+    </ul>
+  </div>
+  {{else}}
+  <div class="col-md-3 text-end">
+    <a href="/auth/signin" type="button" class="btn btn-outline-light me-2">Login</a>
+  </div>
+  {{/if}}
+</header>
+
+<body class="d-flex flex-column min-vh-100">
+  {{{body}}}
+</body>
+<div class="wrapper flex-grow-1"></div>
+<footer class="py-3 mt-4">
+  <div class="border-bottom text-center">
+    <img src="/images/geyser.png" class="mx-auto img-fluid" alt="Geyser Logo">
+    <p class="font-weight-bold">Powered by, but not associated with GeyserMC.</p>
+  </div>
+  <p class="text-center">All logos are owned by their respective companies, and do not indicate any endorsement or
+    affiliation with said companies.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+  integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+  integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+
+</html>

@@ -1,0 +1,41 @@
+{
+  "name": "GeyserConnectWebsite",
+  "version": "0.0.0",
+  "private": true,
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "build-sass": "sass scss:public/stylesheets",
+    "watch-sass": "sass --no-source-map --watch scss:attributes/stylesheets",
+    "run": "node app.js",
+    "build": "npm install",
+    "start": "npm-run-all --parallel build-sass watch-sass run"
+  },
+  "dependencies": {
+    "@azure/msal-node": "^1.14.6",
+    "axios": "^1.2.2",
+    "bootstrap": "^5.3.0-alpha1",
+    "buffer-crc32": "^0.2.13",
+    "concurrently": "^7.6.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-session": "^1.0.0",
+    "hbs": "^4.2.0",
+    "http-errors": "~1.6.3",
+    "morgan": "^1.3.2",
+    "mysql2": "^3.0.1",
+    "npm-run-all": "^4.1.5",
+    "query-string": "^8.1.0",
+    "routes": "^2.1.0",
+    "sass": "^1.62.1",
+    "uid2": "^1.0.0",
+    "util": "^0.12.5"
+  },
+  "devDependencies": {
+    "node-sass": "^9.0.0",
+    "nodemon": "^2.0.20",
+    "standardjs": "^1.0.0-alpha"
+  }
+}

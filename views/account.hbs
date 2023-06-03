@@ -1,0 +1,243 @@
+{{#if alert}}
+<div class="container">
+  <div class="alert alert-success" role="alert">
+    {{alert}}
+  </div>
+</div>
+{{/if}}
+<div class="container">
+  <div class="row gutters-sm">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-column align-items-center text-center">
+            <img src="https://cdn.pastemagazine.com/www/blogs/lists/2010/05/13/bender.jpg" alt="Profile Picture"
+              class="rounded-circle img-fluid" />
+          </div>
+          <div class="mt-3 text-center">
+            <h4>
+              {{username}}
+              {{#if admin}}
+              <span class="badge bg-primary">
+                Admin
+              </span>
+              {{/if}}
+              {{#if premium}}
+              <span class="badge bg-warning">
+                Supporter
+              </span>
+              {{else}}
+              <span class="badge bg-secondary">
+                Free
+              </span>
+              <a class="btn btn-primary mt-md-3" href="https://www.patreon.com/geyserconnect" target="_blank">
+                Get Supporter
+              </a>
+              {{/if}}
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      {{#if premium}}
+      <div class="card my-3">
+        <div class="card-header">
+          Thank you for Supporting us!
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            Your support helps up continue being able to run the Public GeyserConnect
+          </p>
+        </div>
+      </div>
+      {{else}}
+      <div class="accordion my-3">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+              aria-expanded="true" aria-controls="collapseOne">
+              Premium Info
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <p class="card-text">
+                Inactive players will be blacklisted after 2 weeks of not using our services.
+                Click on Renew PlayTime to reset your PlayTimer for our services.
+              </p>
+              <p class="card-text">
+                Server supporters receive a perk that whitelists them so they don't have to renew their
+                Playtime.
+                You can donate to support our server via our Patreon or by boosting our Discord server.
+                This perk is only active so long as the server boost or donations remain active.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+
+    </div>
+    <div class="col">
+      <div class="card mb-3">
+        <div class="card-header">
+          Service usage
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            Last date of using our services: {{playtime}}
+          </p>
+          {{#if isLinked}}
+          <form class="admin-form" method="POST">
+            <button class="btn btn-primary" formaction="/account/playtimer" type="submit">
+              Reset your
+              PlayTimer
+            </button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header">
+          {{#if isLinked}}
+          Account is linked
+          {{else}}
+          Account is not linked
+          {{/if}}
+        </div>
+        <div class="card-body">
+          {{#if isLinked}}
+          {{else}}
+          <p class="card-text">
+            You must link your account to renew your PlayTimer!
+          </p>
+          {{/if}}
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header">
+          {{#if isDiscordLinked}}
+          Discord is linked
+          {{else}}
+          Discord is not Linked
+          {{/if}}
+        </div>
+        <div class="card-body">
+          {{#if isDiscordLinked}}
+          {{else}}
+          <a
+            href="https://discord.com/api/oauth2/authorize?client_id=1070111889570414632&redirect_uri=http%3A%2F%2Flocalhost%2Faccount%2Fdiscord%2Fredirect&response_type=code&scope=identify">
+            <button class="btn btn-primary"> Link your discord</button>
+          </a>
+          <p class="card-text">
+            You must link your discord inorder to activate your supporter perks!
+          </p>
+          {{/if}}
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header">
+          Friend bot settings
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            Current bot access: {{botName}}
+          </p>
+          {{#if isLinked}}
+          <form class="form-inline" method="POST">
+            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">
+              Select which bot you want to use.
+            </label>
+            <select class="form-select my-1 mr-sm-2" name="method_select" id="inlineFormCustomSelectPref">
+              <option selected value="Public GC">
+                Public GC
+              </option>
+              <option value="Public US GC">
+                Public US GC
+              </option>
+              <option value="Public EU GC">
+                Public EU GC
+              </option>
+            </select>
+            <button type="submit" formaction="/account/updatebot" class="btn btn-primary my-1">
+              Submit
+            </button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    {{#if admin}}
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          Administrator Options
+        </div>
+        <div class="card-body admin-form">
+          <form method="POST">
+            <label for="gamertag" class="form-label">
+              Gamertag
+            </label>
+            <input type="text" class="form-control admin-form-input mb-3" name="input" id="input"
+              placeholder="Username1234" required />
+            <div class="d-grid gap-3">
+              <button class="account-button btn btn-info" formaction="/account/admin/lookup" type="submit">
+                Lookup profile
+              </button>
+              <button class="account-button btn btn-info" formaction="/account/admin/premium" type="submit">
+                Make Supporter
+              </button>
+              <button class="account-button btn btn-info" formaction="/account/admin/admin" type="submit">
+                Make Admin
+              </button>
+              <button class="account-button btn btn-info" formaction="/account/admin/playtimer" type="submit">
+                Reset PlayTimer
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      {{#if hasTarget}}
+      <div class="card mt-3">
+        <div class="card-header">
+          {{targetUsername}}
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <strong>
+              Last Played:
+            </strong>
+            {{targetPlaytime}}
+          </li>
+          <li class="list-group-item">
+            <strong>
+              Is Supporter:
+            </strong>
+            {{targetPremium}}
+          </li>
+          <li class="list-group-item">
+            <strong>
+              Is Administrator
+            </strong>
+            {{targetAdmin}}
+          </li>
+          <li class="list-group-item">
+            <strong>
+              XUID:
+            </strong>
+            {{targetXuid}}
+          </li>
+          <li class="list-group-item">
+            <strong>
+              Bot Used:
+            </strong>
+            {{targetBotName}}
+          </li>
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+    {{/if}}
+  </div>
+</div>
