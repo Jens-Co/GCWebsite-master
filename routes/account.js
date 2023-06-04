@@ -138,11 +138,11 @@ router.get('/discord/redirect', async function (req, res, next) {
       console.log(err);
     })
 
-  const user = await fetch(`https://discord.com/api/users/@me`, {
-    headers: {
-      Authorization: `Bearer ${OAuthResult.access_token}`
-    }
-  })
+    let user = await fetch(`https://discord.com/api/users/@me`, {
+      headers: {
+        Authorization: `Bearer ${OAuthResult.access_token}`
+      }
+    })
 
   user = await user.json()
 
