@@ -126,8 +126,7 @@
         <div class="card-body">
           {{#if isDiscordLinked}}
           {{else}}
-          <a
-            href="https://discord.com/api/oauth2/authorize?client_id=1070111889570414632&redirect_uri=http%3A%2F%2Flocalhost%2Faccount%2Fdiscord%2Fredirect&response_type=code&scope=identify">
+         <a href="{{discordLink}}">
             <button class="btn btn-primary"> Link your discord</button>
           </a>
           <p class="card-text">

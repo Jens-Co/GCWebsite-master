@@ -138,7 +138,7 @@ router.get('/discord/redirect', async function (req, res, next) {
       console.log(err);
     })
 
-  user = await fetch(`https://discord.com/api/users/@me`, {
+  const user = await fetch(`https://discord.com/api/users/@me`, {
     headers: {
       Authorization: `Bearer ${OAuthResult.access_token}`
     }
@@ -147,11 +147,11 @@ router.get('/discord/redirect', async function (req, res, next) {
   user = await user.json()
 
   if (user.id !== "undefined") {
-    //updateDiscordIDDB(getUsername, user.id);
+    updateDiscordIDDB(getUsername, user.id);
     renderAccountPage(res, req, + 'Your discord is now linked!')
     return
   }
-  //updateDiscordIDDB(getUsername, user.id);
+  updateDiscordIDDB(getUsername, user.id);
   renderAccountPage(res, req, + 'Something went wrong while linking your discord account.')
 })
 
@@ -191,6 +191,8 @@ async function updateDiscordIDDB(gamertag, id) {
   await updateDiscordID(gamertag, id)
 }
 
+const discordLink = `https://discord.com/api/oauth2/authorize?client_id=1070111889570414632&redirect_uri=${process.env.APP_URL}/account/discord/redirect&response_type=code&scope=identify`;
+
 function renderAccountPage(res, req, feedback) {
   res.render('account', {
     isAuthenticated: req.session.isAuthenticated,
@@ -209,7 +211,8 @@ function renderAccountPage(res, req, feedback) {
     targetBotName: tBotName,
     targetPremium: tPremium,
     targetAdmin: tAdmin,
-    targetXuid: tXuid
+    targetXuid: tXuid,
+    discordLink: discordLink
   })
 }
 
