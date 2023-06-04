@@ -6,7 +6,7 @@ dotenv.config();
 const connection = mysql.createConnection({
   host: process.env.DBHOST,
   user: process.env.DBUSERNAME,
-  port: 3306,
+  port: 3036,
   password: process.env.DBPASSWORD,
   database: "gcbots"
 });

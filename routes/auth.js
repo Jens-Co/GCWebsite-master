@@ -2,15 +2,19 @@ import express from 'express';
 import msal from '@azure/msal-node';
 import axios from 'axios';
 
-import { msalConfig, REDIRECT_URI, POST_LOGOUT_REDIRECT_URI } from '../authConfig.js';
+import {
+  msalConfig,
+  REDIRECT_URI,
+  POST_LOGOUT_REDIRECT_URI
+} from '../authConfig.js';
 
 const router = express.Router();
 const msalInstance = new msal.ConfidentialClientApplication(msalConfig);
 const cryptoProvider = new msal.CryptoProvider();
 
-const host = process.env.APP_URL;
+const host = process.env.APP_URL
 
-async function redirectToAuthCodeUrl(req, res, next, authCodeUrlRequestParams, authCodeRequestParams) {
+async function redirectToAuthCodeUrl (req, res, next, authCodeUrlRequestParams, authCodeRequestParams) {
   const { verifier, challenge } = await cryptoProvider.generatePkceCodes();
 
   req.session.pkceCodes = {
@@ -34,7 +38,7 @@ async function redirectToAuthCodeUrl(req, res, next, authCodeUrlRequestParams, a
   };
 
   try {
-    const authCodeUrlResponse = await msalInstance.getAuthCodeUrl(req.session.authCodeUrlRequest);
+    const authCodeUrlResponse = await msalInstance.getAuthCodeUrl(req.session.authCodeUrlRequest)
     res.redirect(authCodeUrlResponse);
   } catch (error) {
     next(error);
@@ -42,42 +46,44 @@ async function redirectToAuthCodeUrl(req, res, next, authCodeUrlRequestParams, a
 }
 
 async function getXboxAccount(accessToken) {
-  const xboxAuth = await axios.post(
-    'https://user.auth.xboxlive.com/user/authenticate',
-    {
-      Properties: {
-        AuthMethod: 'RPS',
-        SiteName: 'user.auth.xboxlive.com',
-        RpsTicket: 'd=' + accessToken
+  const xboxAuth = await axios
+    .post(
+      'https://user.auth.xboxlive.com/user/authenticate',
+      {
+        Properties: {
+          AuthMethod: 'RPS',
+          SiteName: 'user.auth.xboxlive.com',
+          RpsTicket: 'd=' + accessToken
+        },
+        RelyingParty: 'http://auth.xboxlive.com',
+        TokenType: 'JWT'
       },
-      RelyingParty: 'http://auth.xboxlive.com',
-      TokenType: 'JWT'
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        }
       }
-    }
-  );
+    );
 
-  const xstsAuth = await axios.post(
-    'https://xsts.auth.xboxlive.com/xsts/authorize',
-    {
-      Properties: {
-        SandboxId: 'RETAIL',
-        UserTokens: [xboxAuth.data.Token]
+  const xstsAuth = await axios
+    .post(
+      'https://xsts.auth.xboxlive.com/xsts/authorize',
+      {
+        Properties: {
+          SandboxId: 'RETAIL',
+          UserTokens: [xboxAuth.data.Token]
+        },
+        RelyingParty: 'http://xboxlive.com',
+        TokenType: 'JWT'
       },
-      RelyingParty: 'http://xboxlive.com',
-      TokenType: 'JWT'
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        }
       }
-    }
-  );
+    );
 
   return {
     gamertag: xstsAuth.data.DisplayClaims.xui[0].gtg,
@@ -104,13 +110,14 @@ router.get('/signin', async function (req, res, next) {
     scopes: ['XboxLive.signin']
   };
 
-  return redirectToAuthCodeUrl(req, res, next, authCodeUrlRequestParams, authCodeRequestParams);
+  return redirectToAuthCodeUrl(req, res, next, authCodeUrlRequestParams, authCodeRequestParams)
 });
 
 router.post('/redirect', async function (req, res, next) {
   if (req.body.state) {
     const state = JSON.parse(cryptoProvider.base64Decode(req.body.state));
 
+    console.log(state, req.session.csrfToken);
     if (state.csrfToken === req.session.csrfToken) {
       req.session.authCodeRequest.code = req.body.code;
       req.session.authCodeRequest.codeVerifier = req.session.pkceCodes.verifier;
